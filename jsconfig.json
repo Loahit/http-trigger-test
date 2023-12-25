@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./src",
+        "paths": {
+            "@routes/*": ["./routes/*"],
+            "@folder1/*": ["./routes/admin/*"],
+            "@controller/*": ["./controller/*"],
+            "@conFolder/*": ["./controller/adminController/*"]
+        }
+    },
+    "include": ["src/**/*"]
+}
