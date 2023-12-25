@@ -33,7 +33,7 @@ app.get('/download', (req, res) => {
 });
 
 app.get('/sample', (req, res) => {
-    res.send('Hello');
+    res.send('Hello World!');
 })
 
 
