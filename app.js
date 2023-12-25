@@ -34,7 +34,35 @@ app.get('/download', (req, res) => {
 
 app.get('/sample', (req, res) => {
     res.send('Hello World!');
-})
+});
+
+app.get('/data', (req, res) => {
+    const jsonArray = [
+        ['Name', 'Age', 'Country'],
+        ['John Doe', 25, 'USA'],
+        ['Jane Smith', 30, 'Canada'],
+        ['Bob Johnson', 22, 'UK'],
+    ];
+    res.send({ "data": jsonArray });
+});
+
+app.get('/data2', (req, res) => {
+    const jsonArray = [
+        {
+            "name": 'Loahit',
+            "age": 21
+        },
+        {
+            "name": 'Sujith',
+            "age": 41
+        },
+        {
+            "name": 'Monesh',
+            "age": 31
+        }
+    ];
+    res.send({ "data": jsonArray });
+});
 
 
 
