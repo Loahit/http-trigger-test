@@ -22,14 +22,18 @@ app.get('/download', (req, res) => {
     res.setHeader('Content-Disposition', 'attachment; filename=example.xlsx');
 
     workbook.xlsx.write(res)
-    .then(() => {
-      // End the response stream
-      res.end();
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).send('Internal Server Error');
-    });
+        .then(() => {
+            // End the response stream
+            res.end();
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).send('Internal Server Error');
+        });
+});
+
+app.get('/sample', (req, res) => {
+    res.send('Hello');
 })
 
 
