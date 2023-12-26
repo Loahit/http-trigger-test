@@ -64,6 +64,21 @@ app.get('/data2', (req, res) => {
     res.send({ "data": jsonArray });
 });
 
+app.get('/csv', (req, res) => {
+    const csvContent = `
+      Name,Age,Occupation
+      John Doe,30,Engineer
+      Jane Smith,25,Teacher
+      Bob Johnson,40,Doctor
+      Alice Williams,35,Artist
+    `;
+
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader('Content-Disposition', 'attachment; filename=data.csv');
+
+    res.send(csvContent);
+  });
+
 
 
 app.listen(3000, () => {
