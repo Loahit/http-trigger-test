@@ -1,13 +1,7 @@
 import express from "express";
 import ExcelJS from 'exceljs';
-import fs from 'fs';
 
 const app = express();
-
-// const tempDir = './temp';
-// if (fs.existsSync(tempDir)) {
-//     fs.mkdirSync(tempDir);
-// }
 
 app.get('/download', (req, res) => {
     const jsonArray = [
@@ -28,22 +22,14 @@ app.get('/download', (req, res) => {
 
     const filepath = `./temp/${filename}`;
 
-    console.log(filename);
-
-    console.log('filepath', filepath)
-
     // res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     // res.setHeader('Content-Disposition', 'attachment; filename=example.xlsx');
 
     workbook.xlsx.writeFile(filepath)
         .then(() => {
-            console.log('then');
-            console.log(req.protocol);
-            console.log(req.get('host'));
             // End the response stream
             // res.end();
             const downloadLink = `${req.protocol}://${req.get('host')}/download/${filename}`;
-            console.log(downloadLink)
             res.json({ downloadLink });
         })
         .catch(err => {
