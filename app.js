@@ -1,7 +1,13 @@
 import express from "express";
 import ExcelJS from 'exceljs';
+import fs from 'fs';
 
 const app = express();
+
+// const tempDir = './temp';
+// if (fs.existsSync(tempDir)) {
+//     fs.mkdirSync(tempDir);
+// }
 
 app.get('/download', (req, res) => {
     const jsonArray = [
@@ -18,19 +24,35 @@ app.get('/download', (req, res) => {
         worksheet.addRow(row);
     });
 
-    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    res.setHeader('Content-Disposition', 'attachment; filename=example.xlsx');
+    const filename = `example_${Date.now()}.xlsx`;
 
-    workbook.xlsx.write(res)
+    const filepath = `./temp/${filename}`;
+
+    console.log(filename);
+
+    console.log('filepath', filepath)
+
+    // res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    // res.setHeader('Content-Disposition', 'attachment; filename=example.xlsx');
+
+    workbook.xlsx.writeFile(filepath)
         .then(() => {
+            console.log('then');
+            console.log(req.protocol);
+            console.log(req.get('host'));
             // End the response stream
-            res.end();
+            // res.end();
+            const downloadLink = `${req.protocol}://${req.get('host')}/download/${filename}`;
+            console.log(downloadLink)
+            res.json({ downloadLink });
         })
         .catch(err => {
             console.error(err);
             res.status(500).send('Internal Server Error');
         });
 });
+
+app.use('/download', express.static('temp'));
 
 app.get('/sample', (req, res) => {
     res.send('Hello World!');
